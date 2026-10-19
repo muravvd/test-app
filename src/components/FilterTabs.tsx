@@ -1,5 +1,6 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { FILTER_LABELS, FILTERS, type MatchFilter } from '../utils/matches';
+import { styles } from './styles/FilterTabs.styles';
 
 type Props = {
   value: MatchFilter;
@@ -29,27 +30,3 @@ export function FilterTabs({ value, counts, onChange }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  tab: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 999,
-    backgroundColor: '#f3f4f6',
-  },
-  tabSelected: {
-    backgroundColor: '#111827',
-  },
-  label: {
-    fontSize: 14,
-    color: '#111827',
-  },
-  labelSelected: {
-    color: '#fff',
-  },
-});

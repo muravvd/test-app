@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, FlatList, Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, Text, View } from 'react-native';
+import { Button } from '../components/Button';
 import { FilterTabs } from '../components/FilterTabs';
 import { MatchCard } from '../components/MatchCard';
 import { UpdatedAgo } from '../components/UpdatedAgo';
 import { useMatches } from '../hooks/useMatches';
 import { matchesFilter, sortByStartTime, type MatchFilter } from '../utils/matches';
+import { styles } from './styles/MatchesScreen.styles';
 
 const EMPTY_FILTER_TEXT: Record<MatchFilter, string> = {
   all: 'В этом туре пока нет матчей.',
@@ -83,94 +85,6 @@ export function MatchesScreen() {
   );
 }
 
-function Button({ title, onPress, disabled }: { title: string; onPress: () => void; disabled?: boolean }) {
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      accessibilityRole="button"
-      style={({ pressed }) => [styles.button, (pressed || disabled) && styles.buttonDimmed]}
-    >
-      <Text style={styles.buttonText}>{title}</Text>
-    </Pressable>
-  );
-}
-
 function Separator() {
   return <View style={styles.separator} />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 12,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  round: {
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#6b7280',
-  },
-  centered: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
-  },
-  hint: {
-    fontSize: 14,
-    color: '#6b7280',
-    textAlign: 'center',
-  },
-  errorTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  errorBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: '#fee2e2',
-  },
-  errorBannerText: {
-    flex: 1,
-    fontSize: 14,
-    color: '#991b1b',
-  },
-  button: {
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 8,
-    backgroundColor: '#111827',
-  },
-  buttonDimmed: {
-    opacity: 0.6,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  listContent: {
-    paddingBottom: 16,
-  },
-  emptyContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  separator: {
-    height: 8,
-  },
-});

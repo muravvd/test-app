@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
+import { styles } from './styles/FavoriteButton.styles';
 
 type Props = {
   active: boolean;
@@ -18,13 +19,3 @@ export function FavoriteButton({ active, onPress }: Props) {
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  star: {
-    fontSize: 22,
-    color: '#9ca3af',
-  },
-  active: {
-    color: '#ef3124',
-  },
-});

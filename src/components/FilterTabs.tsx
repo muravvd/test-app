@@ -1,7 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { FILTER_LABELS, type MatchFilter } from '../utils/matches';
-
-const FILTERS: MatchFilter[] = ['all', 'upcoming', 'finished'];
+import { FILTER_LABELS, FILTERS, type MatchFilter } from '../utils/matches';
 
 type Props = {
   value: MatchFilter;
@@ -35,6 +33,7 @@ export function FilterTabs({ value, counts, onChange }: Props) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 8,
   },
   tab: {

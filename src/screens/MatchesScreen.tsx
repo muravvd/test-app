@@ -8,6 +8,7 @@ import { matchesFilter, sortByStartTime, type MatchFilter } from '../utils/match
 
 const EMPTY_FILTER_TEXT: Record<MatchFilter, string> = {
   all: 'В этом туре пока нет матчей.',
+  live: 'Сейчас матчи не идут.',
   upcoming: 'Предстоящих матчей нет.',
   finished: 'Завершённых матчей пока нет.',
 };
@@ -22,14 +23,10 @@ export function MatchesScreen() {
     () => sortedMatches.filter((match) => matchesFilter(match, filter)),
     [sortedMatches, filter],
   );
-  const counts = useMemo(
-    () => ({
-      all: sortedMatches.length,
-      upcoming: sortedMatches.filter((match) => matchesFilter(match, 'upcoming')).length,
-      finished: sortedMatches.filter((match) => matchesFilter(match, 'finished')).length,
-    }),
-    [sortedMatches],
-  );
+  const counts = useMemo(() => {
+    const count = (f: MatchFilter) => sortedMatches.filter((match) => matchesFilter(match, f)).length;
+    return { all: count('all'), live: count('live'), upcoming: count('upcoming'), finished: count('finished') };
+  }, [sortedMatches]);
 
   if (!data) {
     return (

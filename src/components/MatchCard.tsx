@@ -16,19 +16,15 @@ export function MatchCard({ match }: Props) {
         <Text style={[styles.status, { color: STATUS_COLORS[match.status] }]}>{getStatusLabel(match)}</Text>
       </View>
 
-      <TeamRow name={home.name} goals={score?.home} />
-      <TeamRow name={away.name} goals={score?.away} />
-    </View>
-  );
-}
-
-function TeamRow({ name, goals }: { name: string; goals: number | undefined }) {
-  return (
-    <View style={styles.teamRow}>
-      <Text style={styles.teamName} numberOfLines={1}>
-        {name}
-      </Text>
-      <Text style={styles.goals}>{goals ?? '–'}</Text>
+      <View style={styles.line}>
+        <Text style={[styles.team, styles.homeTeam]} numberOfLines={2}>
+          {home.name}
+        </Text>
+        <Text style={styles.score}>{score ? `${score.home} : ${score.away}` : '– : –'}</Text>
+        <Text style={[styles.team, styles.awayTeam]} numberOfLines={2}>
+          {away.name}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -38,12 +34,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 12,
     backgroundColor: '#f3f4f6',
-    gap: 6,
+    gap: 8,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 2,
   },
   date: {
     fontSize: 13,
@@ -52,22 +47,27 @@ const styles = StyleSheet.create({
   status: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#6b7280',
   },
-  teamRow: {
+  line: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
   },
-  teamName: {
+  team: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 18,
   },
-  goals: {
-    fontSize: 16,
-    fontWeight: '700',
-    minWidth: 20,
+  homeTeam: {
     textAlign: 'right',
+  },
+  awayTeam: {
+    textAlign: 'left',
+  },
+  score: {
+    fontSize: 20,
+    fontWeight: '700',
+    minWidth: 64,
+    textAlign: 'center',
   },
 });
 

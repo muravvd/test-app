@@ -17,6 +17,7 @@ const EMPTY_FILTER_TEXT: Record<MatchFilter, string> = {
   live: 'Сейчас матчи не идут.',
   upcoming: 'Предстоящих матчей нет.',
   finished: 'Завершённых матчей пока нет.',
+  favorites: 'В избранном пока ничего нет.',
 };
 
 // Экран «Матчи тура» — задание в README.md, часть 1.
@@ -27,19 +28,27 @@ export function MatchesScreen() {
   const [filter, setFilter] = useState<MatchFilter>('all');
   const [query, setQuery] = useState('');
 
+  const favoriteIds = useMemo(() => new Set(favorites), [favorites]);
   const sortedMatches = useMemo(() => sortByStartTime(data?.matches ?? []), [data]);
   const searchedMatches = useMemo(
     () => sortedMatches.filter((match) => matchesSearch(match, query)),
     [sortedMatches, query],
   );
   const visibleMatches = useMemo(
-    () => searchedMatches.filter((match) => matchesFilter(match, filter)),
-    [searchedMatches, filter],
+    () => searchedMatches.filter((match) => matchesFilter(match, filter, favoriteIds)),
+    [searchedMatches, filter, favoriteIds],
   );
   const counts = useMemo(() => {
-    const count = (f: MatchFilter) => searchedMatches.filter((match) => matchesFilter(match, f)).length;
-    return { all: count('all'), live: count('live'), upcoming: count('upcoming'), finished: count('finished') };
-  }, [searchedMatches]);
+    const count = (f: MatchFilter) =>
+      searchedMatches.filter((match) => matchesFilter(match, f, favoriteIds)).length;
+    return {
+      all: count('all'),
+      live: count('live'),
+      upcoming: count('upcoming'),
+      finished: count('finished'),
+      favorites: count('favorites'),
+    };
+  }, [searchedMatches, favoriteIds]);
 
   const trimmedQuery = query.trim();
   const emptyText =
@@ -104,6 +113,7 @@ export function MatchesScreen() {
         contentContainerStyle={visibleMatches.length === 0 ? styles.emptyContent : styles.listContent}
         ListEmptyComponent={<Text style={[styles.hint, themed.hint]}>{emptyText}</Text>}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={refresh} />}
       />
     </View>

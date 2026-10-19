@@ -1,14 +1,15 @@
 import type { Match, MatchStatus } from '../types/match';
 
-export type MatchFilter = 'all' | 'live' | 'upcoming' | 'finished';
+export type MatchFilter = 'all' | 'live' | 'upcoming' | 'finished' | 'favorites';
 
-export const FILTERS: MatchFilter[] = ['all', 'live', 'upcoming', 'finished'];
+export const FILTERS: MatchFilter[] = ['all', 'live', 'upcoming', 'finished', 'favorites'];
 
 export const FILTER_LABELS: Record<MatchFilter, string> = {
   all: 'Все',
   live: 'Текущие',
   upcoming: 'Предстоящие',
   finished: 'Завершённые',
+  favorites: 'Избранные',
 };
 
 const STATUS_LABELS: Record<MatchStatus, string> = {
@@ -21,7 +22,7 @@ const STATUS_LABELS: Record<MatchStatus, string> = {
 
 // Предстоящие — ещё не начатые: запланированные и перенесённые.
 // Матчи с неизвестным статусом показываем только во «Все», чтобы не гадать.
-export function matchesFilter(match: Match, filter: MatchFilter): boolean {
+export function matchesFilter(match: Match, filter: MatchFilter, favoriteIds: ReadonlySet<string>): boolean {
   switch (filter) {
     case 'all':
       return true;
@@ -31,6 +32,8 @@ export function matchesFilter(match: Match, filter: MatchFilter): boolean {
       return match.status === 'scheduled' || match.status === 'postponed';
     case 'finished':
       return match.status === 'finished';
+    case 'favorites':
+      return favoriteIds.has(match.id);
   }
 }
 

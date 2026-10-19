@@ -1,12 +1,11 @@
-import { StyleSheet, type TextStyle } from 'react-native';
-import { colors } from '../../styles/colors';
+import { StyleSheet, type TextStyle, type ViewStyle } from 'react-native';
+import type { Theme } from '../../styles/colors';
 import type { MatchStatus } from '../../types/match';
 
 export const styles = StyleSheet.create({
   card: {
     padding: 12,
     borderRadius: 12,
-    backgroundColor: colors.surface,
     gap: 8,
   },
   header: {
@@ -21,7 +20,6 @@ export const styles = StyleSheet.create({
   },
   date: {
     fontSize: 13,
-    color: colors.textMuted,
   },
   status: {
     fontSize: 13,
@@ -35,7 +33,6 @@ export const styles = StyleSheet.create({
   team: {
     flex: 1,
     fontSize: 18,
-    color: colors.text,
   },
   homeTeam: {
     textAlign: 'right',
@@ -48,14 +45,18 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     minWidth: 64,
     textAlign: 'center',
-    color: colors.text,
   },
 });
 
-export const statusStyles = StyleSheet.create({
-  scheduled: { color: colors.info },
-  live: { color: colors.accent },
-  finished: { color: colors.textMuted },
-  postponed: { color: colors.warning },
-  unknown: { color: colors.textMuted },
-}) satisfies Record<MatchStatus, TextStyle>;
+export const themedStyles = (theme: Theme) => ({
+  card: { backgroundColor: theme.surface } satisfies ViewStyle,
+  date: { color: theme.textMuted } satisfies TextStyle,
+  text: { color: theme.text } satisfies TextStyle,
+  status: {
+    scheduled: { color: theme.info },
+    live: { color: theme.accent },
+    finished: { color: theme.textMuted },
+    postponed: { color: theme.warning },
+    unknown: { color: theme.textMuted },
+  } satisfies Record<MatchStatus, TextStyle>,
+});

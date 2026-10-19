@@ -1,9 +1,12 @@
-import { StyleSheet } from 'react-native';
-import { colors } from '../../styles/colors';
+import { StyleSheet, type TextStyle } from 'react-native';
+import type { Theme } from '../../styles/colors';
 
 export const styles = StyleSheet.create({
   text: {
     fontSize: 13,
-    color: colors.textMuted,
   },
+});
+
+export const themedStyles = (theme: Theme) => ({
+  text: { color: theme.textMuted } satisfies TextStyle,
 });

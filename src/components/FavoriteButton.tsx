@@ -1,5 +1,6 @@
 import { Pressable, Text } from 'react-native';
-import { styles } from './styles/FavoriteButton.styles';
+import { useTheme } from '../styles/ThemeProvider';
+import { styles, themedStyles } from './styles/FavoriteButton.styles';
 
 type Props = {
   active: boolean;
@@ -8,6 +9,8 @@ type Props = {
 
 // Звёздочка «в избранное».
 export function FavoriteButton({ active, onPress }: Props) {
+  const themed = themedStyles(useTheme().theme);
+
   return (
     <Pressable
       onPress={onPress}
@@ -15,7 +18,7 @@ export function FavoriteButton({ active, onPress }: Props) {
       accessibilityRole="button"
       accessibilityLabel={active ? 'Убрать из избранного' : 'Добавить в избранное'}
     >
-      <Text style={[styles.star, active && styles.active]}>{active ? '★' : '☆'}</Text>
+      <Text style={[styles.star, themed.star, active && themed.active]}>{active ? '★' : '☆'}</Text>
     </Pressable>
   );
 }

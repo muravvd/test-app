@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { colors } from '../../styles/colors';
+import { StyleSheet, type TextStyle, type ViewStyle } from 'react-native';
+import type { Theme } from '../../styles/colors';
 
 export const styles = StyleSheet.create({
   row: {
@@ -11,16 +11,15 @@ export const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 999,
-    backgroundColor: colors.surface,
-  },
-  tabSelected: {
-    backgroundColor: colors.primary,
   },
   label: {
     fontSize: 14,
-    color: colors.text,
   },
-  labelSelected: {
-    color: colors.onPrimary,
-  },
+});
+
+export const themedStyles = (theme: Theme) => ({
+  tab: { backgroundColor: theme.surface } satisfies ViewStyle,
+  tabSelected: { backgroundColor: theme.primary } satisfies ViewStyle,
+  label: { color: theme.text } satisfies TextStyle,
+  labelSelected: { color: theme.onPrimary } satisfies TextStyle,
 });

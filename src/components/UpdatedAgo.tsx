@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Text } from 'react-native';
-import { styles } from './styles/UpdatedAgo.styles';
+import { useTheme } from '../styles/ThemeProvider';
+import { styles, themedStyles } from './styles/UpdatedAgo.styles';
 
 type Props = {
   // Момент последней успешной загрузки данных.
@@ -20,5 +21,5 @@ export function UpdatedAgo({ since }: Props) {
   // max(0, …): после обновления since может оказаться чуть позже последнего тика now.
   const seconds = Math.max(0, Math.floor((now - since.getTime()) / 1000));
 
-  return <Text style={styles.text}>Обновлено {seconds} сек назад</Text>;
+  return <Text style={[styles.text, themedStyles(useTheme().theme).text]}>Обновлено {seconds} сек назад</Text>;
 }

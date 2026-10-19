@@ -1,4 +1,19 @@
-export const colors = {
+export type Theme = {
+  background: string;
+  surface: string;
+  text: string;
+  textMuted: string;
+  textSubtle: string;
+  primary: string;
+  onPrimary: string;
+  accent: string;
+  info: string;
+  warning: string;
+  errorSurface: string;
+  errorText: string;
+};
+
+export const lightTheme: Theme = {
   background: '#fff',
   surface: '#f3f4f6',
   text: '#111827',
@@ -11,4 +26,19 @@ export const colors = {
   warning: '#d97706',
   errorSurface: '#fee2e2',
   errorText: '#991b1b',
-} as const;
+};
+
+export const darkTheme: Theme = {
+  background: '#0f172a',
+  surface: '#1e293b',
+  text: '#f1f5f9',
+  textMuted: '#94a3b8',
+  textSubtle: '#64748b',
+  primary: '#f1f5f9',
+  onPrimary: '#0f172a',
+  accent: '#f87171',
+  info: '#60a5fa',
+  warning: '#fbbf24',
+  errorSurface: '#3f1d1d',
+  errorText: '#fca5a5',
+};

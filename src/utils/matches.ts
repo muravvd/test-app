@@ -34,6 +34,19 @@ export function matchesFilter(match: Match, filter: MatchFilter): boolean {
   }
 }
 
+// Без учёта регистра и разницы «е»/«ё»: «зенит», «ЗЕНИТ» и «Зенит» находят одно и то же.
+function normalizeSearchText(text: string): string {
+  return text.trim().toLocaleLowerCase('ru').replace(/ё/g, 'е');
+}
+
+export function matchesSearch(match: Match, query: string): boolean {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return true;
+  return [match.home.name, match.away.name].some((name) =>
+    normalizeSearchText(name).includes(normalizedQuery),
+  );
+}
+
 export function getStatusLabel(match: Match): string {
   if (match.status === 'live' && match.minute !== null) {
     return `${STATUS_LABELS.live} · ${match.minute}'`;

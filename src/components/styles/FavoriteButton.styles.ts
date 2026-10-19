@@ -1,12 +1,14 @@
-import { StyleSheet } from 'react-native';
-import { colors } from '../../styles/colors';
+import { StyleSheet, type TextStyle } from 'react-native';
+import type { Theme } from '../../styles/colors';
 
 export const styles = StyleSheet.create({
   star: {
     fontSize: 22,
-    color: colors.textSubtle,
   },
-  active: {
-    color: colors.accent,
-  },
+  active: {},
+});
+
+export const themedStyles = (theme: Theme) => ({
+  star: { color: theme.textSubtle } satisfies TextStyle,
+  active: { color: theme.accent } satisfies TextStyle,
 });

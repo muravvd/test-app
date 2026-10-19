@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { colors } from '../../styles/colors';
+import { StyleSheet, type TextStyle, type ViewStyle } from 'react-native';
+import type { Theme } from '../../styles/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -16,12 +16,10 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: colors.text,
   },
   round: {
     fontSize: 16,
     fontWeight: '400',
-    color: colors.textMuted,
   },
   centered: {
     flex: 1,
@@ -31,13 +29,11 @@ export const styles = StyleSheet.create({
   },
   hint: {
     fontSize: 14,
-    color: colors.textMuted,
     textAlign: 'center',
   },
   errorTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: colors.text,
   },
   errorBanner: {
     flexDirection: 'row',
@@ -45,12 +41,10 @@ export const styles = StyleSheet.create({
     gap: 12,
     padding: 12,
     borderRadius: 12,
-    backgroundColor: colors.errorSurface,
   },
   errorBannerText: {
     flex: 1,
     fontSize: 14,
-    color: colors.errorText,
   },
   listContent: {
     paddingBottom: 16,
@@ -62,4 +56,13 @@ export const styles = StyleSheet.create({
   separator: {
     height: 8,
   },
+});
+
+export const themedStyles = (theme: Theme) => ({
+  title: { color: theme.text } satisfies TextStyle,
+  round: { color: theme.textMuted } satisfies TextStyle,
+  hint: { color: theme.textMuted } satisfies TextStyle,
+  errorTitle: { color: theme.text } satisfies TextStyle,
+  errorBanner: { backgroundColor: theme.errorSurface } satisfies ViewStyle,
+  errorBannerText: { color: theme.errorText } satisfies TextStyle,
 });

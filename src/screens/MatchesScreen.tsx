@@ -4,6 +4,7 @@ import { Button } from '../components/Button';
 import { FilterTabs } from '../components/FilterTabs';
 import { MatchCard } from '../components/MatchCard';
 import { UpdatedAgo } from '../components/UpdatedAgo';
+import { useFavorites } from '../hooks/useFavorites';
 import { useMatches } from '../hooks/useMatches';
 import { matchesFilter, sortByStartTime, type MatchFilter } from '../utils/matches';
 import { styles } from './styles/MatchesScreen.styles';
@@ -18,6 +19,7 @@ const EMPTY_FILTER_TEXT: Record<MatchFilter, string> = {
 // Экран «Матчи тура» — задание в README.md, часть 1.
 export function MatchesScreen() {
   const { data, error, isLoading, isRefreshing, updatedAt, refresh, retry } = useMatches();
+  const { favorites, isFavorite, toggle } = useFavorites();
   const [filter, setFilter] = useState<MatchFilter>('all');
 
   const sortedMatches = useMemo(() => sortByStartTime(data?.matches ?? []), [data]);
@@ -73,7 +75,10 @@ export function MatchesScreen() {
       <FlatList
         data={visibleMatches}
         keyExtractor={(match) => match.id}
-        renderItem={({ item }) => <MatchCard match={item} />}
+        renderItem={({ item }) => (
+          <MatchCard match={item} isFavorite={isFavorite(item.id)} onToggleFavorite={toggle} />
+        )}
+        extraData={favorites}
         ItemSeparatorComponent={Separator}
         contentContainerStyle={visibleMatches.length === 0 ? styles.emptyContent : styles.listContent}
         ListEmptyComponent={

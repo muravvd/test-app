@@ -11,7 +11,13 @@ export const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   date: {
     fontSize: 13,
